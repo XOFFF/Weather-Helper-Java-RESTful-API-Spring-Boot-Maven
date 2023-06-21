@@ -46,6 +46,7 @@ public class CityKeyGetter {
         try{
             URL url = new URL("http://dataservice.accuweather.com/locations/v1/" + urlKeyword + "/search?apikey=" + apiKey + "&q=" + endpoint);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("Accept-Encoding", "gzip");
             con.connect();
 
             int responseCode = con.getResponseCode();
@@ -71,7 +72,7 @@ public class CityKeyGetter {
             }
 
         } catch (Exception e){
-            System.out.println("System cannot find this postcode :( Try again.");
+            System.out.println("System cannot find that :( Try again.");
             if(urlKeyword.equals("cities")){
                 return GetCityKeyByName();
             }
