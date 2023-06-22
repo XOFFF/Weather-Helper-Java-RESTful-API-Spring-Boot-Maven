@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String apiKey = "hHQoU0Adpo6wzZi9PK198lzBPK8vA75z";
+            String apiKey = "hHQoU0Adpo6wzZi9PK198lzBPK8vA75z";
 
         while(true) {
-            String choice = AskForChoice();
-            GetForecastData(apiKey, choice);
+            String choice = askForChoice();
+            getForecastData(apiKey, choice);
         }
     }
 
-    public static String AskForChoice(){
+    public static String askForChoice(){
         Scanner scanner = new Scanner(System.in);
         String choice;
         System.out.println("Hello! Do you want to write down city NAME or POSTCODE?");
@@ -24,18 +24,18 @@ public class Main {
         return choice;
     }
 
-    public static void GetForecastData(String apiKey, String choice){
+    public static void getForecastData(String apiKey, String choice){
         String cityKey = "";
         CityKeyGetter cityKeyGetter = new CityKeyGetter(apiKey);
 
         if (choice.equals("1")) { // user wants to write city name
-            cityKey = cityKeyGetter.GetCityKeyByName();
+            cityKey = cityKeyGetter.getCityKeyByName();
         }
         else if (choice.equals("2")) { // user wants to write city postCode
-            cityKey = cityKeyGetter.GetCityKeyByPostCode();
+            cityKey = cityKeyGetter.getCityKeyByPostCode();
         }
 
         FiveDaysTempForecast fiveDaysTempForecast = new FiveDaysTempForecast(apiKey, cityKey);
-        fiveDaysTempForecast.GetFiveDaysTemperatureForecast();
+        fiveDaysTempForecast.getFiveDaysTemperatureForecast();
     }
 }

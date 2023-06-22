@@ -35,7 +35,7 @@ public class DayForecast {
         this.maxTemp = maxTemp;
     }
 
-    public void ShowData(){
+    public void showData(){
         System.out.println("Date: " + date);
         System.out.println("Min temp: " + minTemp + " C");
         System.out.println("Max temp: " + maxTemp + " C");

@@ -21,27 +21,27 @@ public class CityKeyGetter {
         this.apiKey = apiKey;
     }
 
-    public String GetCityKeyByName(){
+    public String getCityKeyByName(){
         Scanner nameScanner = new Scanner(System.in);
         String urlKeyword = "cities";
 
         System.out.print("Write city NAME: ");
         String cityNameEndpoint = nameScanner.next();
 
-        return GetResponse(urlKeyword, cityNameEndpoint);
+        return getResponse(urlKeyword, cityNameEndpoint);
     }
 
-    public String GetCityKeyByPostCode(){
+    public String getCityKeyByPostCode(){
         Scanner postCodeScanner = new Scanner(System.in);
         String urlKeyword = "postalcodes";
 
         System.out.print("Write city POSTCODE: ");
         String cityPostCodeEndpoint = postCodeScanner.next();
 
-        return GetResponse(urlKeyword, cityPostCodeEndpoint);
+        return getResponse(urlKeyword, cityPostCodeEndpoint);
     }
 
-    private String GetResponse(String urlKeyword, String endpoint){
+    protected String getResponse(String urlKeyword, String endpoint){
         String cityKey = "";
         try{
             URL url = new URL("http://dataservice.accuweather.com/locations/v1/" + urlKeyword + "/search?apikey=" + apiKey + "&q=" + endpoint);
@@ -74,10 +74,10 @@ public class CityKeyGetter {
         } catch (Exception e){
             System.out.println("System cannot find that :( Try again.");
             if(urlKeyword.equals("cities")){
-                return GetCityKeyByName();
+                return getCityKeyByName();
             }
             else if(urlKeyword.equals("postalcodes")){
-                return GetCityKeyByPostCode();
+                return getCityKeyByPostCode();
             }
         }
         return cityKey;

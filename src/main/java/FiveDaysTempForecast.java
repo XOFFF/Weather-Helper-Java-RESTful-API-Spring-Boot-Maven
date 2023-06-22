@@ -32,7 +32,7 @@ public class FiveDaysTempForecast {
         this.cityKeyEndpoint = cityKeyEndpoint;
     }
 
-    public void GetFiveDaysTemperatureForecast(){
+    public void getFiveDaysTemperatureForecast(){
         try{
             URL url = new URL("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityKeyEndpoint + "?apikey=" + apiKey);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -64,14 +64,14 @@ public class FiveDaysTempForecast {
                 for(int dayCount=0; dayCount<dailyForecasts.size(); dayCount++){
                     JSONObject dayData = (JSONObject) dailyForecasts.get(dayCount);
 
-                    LocalDate date = DateConverter.ConvertDate(dayData);
+                    LocalDate date = DateConverter.convertDate(dayData);
 
                     JSONObject dayTempData = (JSONObject) dayData.get("Temperature");
-                    float minTemp = TemperatureConverter.ConvertTemperature(dayTempData, "Minimum");
-                    float maxTemp = TemperatureConverter.ConvertTemperature(dayTempData, "Maximum");
+                    float minTemp = TemperatureConverter.convertTemperature(dayTempData, "Minimum");
+                    float maxTemp = TemperatureConverter.convertTemperature(dayTempData, "Maximum");
 
                     DayForecast dayForecast = new DayForecast(date, minTemp, maxTemp);
-                    dayForecast.ShowData();
+                    dayForecast.showData();
                 }
             }
         } catch (Exception e){
