@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class FiveDaysTempForecast {
     private String apiKey;
     private String cityKeyEndpoint;
+    private int dailyForecastsSize;
 
     public FiveDaysTempForecast(String apiKey, String cityKeyEndpoint) {
         this.apiKey = apiKey;
@@ -32,10 +33,19 @@ public class FiveDaysTempForecast {
         this.cityKeyEndpoint = cityKeyEndpoint;
     }
 
+    public int getDailyForecastsSize() {
+        return dailyForecastsSize;
+    }
+
+    public void setDailyForecastsSize(int dailyForecastsSize) {
+        this.dailyForecastsSize = dailyForecastsSize;
+    }
+
     public void getFiveDaysTemperatureForecast(){
         try{
             URL url = new URL("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityKeyEndpoint + "?apikey=" + apiKey);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("Accept-Encoding", "gzip");
 
             System.out.println("Link to the full JSON response: " + url);
             System.out.println("-----------------------");
@@ -60,8 +70,9 @@ public class FiveDaysTempForecast {
                 JSONObject dataObject = (JSONObject) parser.parse(String.valueOf(informationString));
 
                 JSONArray dailyForecasts = (JSONArray) dataObject.get("DailyForecasts");
+                dailyForecastsSize = dailyForecasts.size();
 
-                for(int dayCount=0; dayCount<dailyForecasts.size(); dayCount++){
+                for(int dayCount=0; dayCount<dailyForecastsSize; dayCount++){
                     JSONObject dayData = (JSONObject) dailyForecasts.get(dayCount);
 
                     LocalDate date = DateConverter.convertDate(dayData);
