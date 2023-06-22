@@ -42,6 +42,7 @@ public class FiveDaysTempForecast {
     }
 
     public void getFiveDaysTemperatureForecast(){
+        RequestsCounter.addRequestToCounter();
         try{
             URL url = new URL("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityKeyEndpoint + "?apikey=" + apiKey);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();

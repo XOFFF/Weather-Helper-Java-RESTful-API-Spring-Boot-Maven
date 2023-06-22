@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class CityKeyGetter {
     private String apiKey;
+    private int responseCode;
 
     public CityKeyGetter(String apiKey) {
         this.apiKey = apiKey;
@@ -19,6 +20,14 @@ public class CityKeyGetter {
 
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
     }
 
     public String getCityKeyByName(){
@@ -43,13 +52,14 @@ public class CityKeyGetter {
 
     protected String getResponse(String urlKeyword, String endpoint){
         String cityKey = "";
+        RequestsCounter.addRequestToCounter();
         try{
             URL url = new URL("http://dataservice.accuweather.com/locations/v1/" + urlKeyword + "/search?apikey=" + apiKey + "&q=" + endpoint);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("Accept-Encoding", "gzip");
             con.connect();
 
-            int responseCode = con.getResponseCode();
+            responseCode = con.getResponseCode();
 
             if(responseCode != 200){
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
@@ -68,17 +78,11 @@ public class CityKeyGetter {
 
                 JSONObject cityData = (JSONObject) dataObject.get(0);
                 cityKey = cityData.get("Key").toString();
-                return cityKey;
             }
 
         } catch (Exception e){
-            System.out.println("System cannot find that :( Try again.");
-            if(urlKeyword.equals("cities")){
-                return getCityKeyByName();
-            }
-            else if(urlKeyword.equals("postalcodes")){
-                return getCityKeyByPostCode();
-            }
+            System.out.println("System cannot find that :(");
+            e.printStackTrace();
         }
         return cityKey;
     }

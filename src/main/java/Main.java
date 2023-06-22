@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-            String apiKey = "hHQoU0Adpo6wzZi9PK198lzBPK8vA75z";
+        String apiKey = "hHQoU0Adpo6wzZi9PK198lzBPK8vA75z";
+        RequestsCounter requestsCounter = new RequestsCounter();
 
-        while(true) {
-            String choice = askForChoice();
-            getForecastData(apiKey, choice);
-        }
+        String choice = askForChoice();
+        getForecastData(apiKey, choice);
+        requestsCounter.showHowManyRequestsProgramUsed();
     }
 
     public static String askForChoice(){
